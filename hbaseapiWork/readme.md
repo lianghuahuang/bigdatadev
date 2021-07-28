@@ -8,4 +8,8 @@
 程序执行结果截图
 ![image](https://user-images.githubusercontent.com/8264550/127257953-2957ee5f-5fb6-44cb-83f5-2a88978bd843.png)
 
+### 需要注意的几个问题：
+- windows环境需要下载hadoop对应版本文件并配置环境变量 HADOOP_HOME  ,path配置 bin和sbin，以及winutils环境准备
+- hosts文件配置，因访问线上环境，集群调用时用hostname访问而非ip，因此需要配置相关节点的host映射关系
+
 
