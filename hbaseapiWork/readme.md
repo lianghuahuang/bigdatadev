@@ -6,7 +6,8 @@
 - 服务器版本为2.1.0（hbase版本和服务器上的版本可以不一致，但尽量保证一致）
 
 程序执行结果截图
-![image](https://user-images.githubusercontent.com/8264550/127257953-2957ee5f-5fb6-44cb-83f5-2a88978bd843.png)
+![image](https://user-images.githubusercontent.com/8264550/127820228-2849eb29-8742-4d2d-aae9-85a6bd379f02.png)
+
 
 ### 需要注意的几个问题：
 - windows环境需要下载hadoop对应版本文件并配置环境变量 HADOOP_HOME  ,path配置 bin和sbin，以及winutils环境准备
