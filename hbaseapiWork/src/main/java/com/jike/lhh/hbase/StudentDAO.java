@@ -157,6 +157,7 @@ public class StudentDAO {
                 return null;
             }
             StudentDTO studentDTO = new StudentDTO();
+            studentDTO.setRowKey(Bytes.toString(result.getRow()));
             for (Cell cell : cells) {
                 cellToStudentDTO(studentDTO, cell);
 
@@ -215,6 +216,7 @@ public class StudentDAO {
                 List<StudentDTO> dataList = new ArrayList<>();
                 for (Result r : rs) {
                     StudentDTO studentDTO = new StudentDTO();
+                    studentDTO.setRowKey(Bytes.toString(r.getRow()));
                     for (Cell cell : r.listCells()) {
                         cellToStudentDTO(studentDTO, cell);
                     }
