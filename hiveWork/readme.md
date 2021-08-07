@@ -8,6 +8,7 @@ join hive_sql_test1.t_user as u
 on u.userid=tr.userid  
 where m.movieid=2116
 group by u.age
+![image](https://user-images.githubusercontent.com/8264550/128607019-a8fb3fcf-cb4f-4615-9aec-d9ef1132aacc.png)
 
 ## 题目2：
 ### 中等：找出男性评分最高且评分次数超过50次的10部电影，展示电影名，平均影评分和评分次数
@@ -23,6 +24,7 @@ group by m.movieid,m.moviename,u.sex
 having count(tr.rate)>50
 order by avg_rate desc
 limit  10
+![image](https://user-images.githubusercontent.com/8264550/128607010-b2c15737-02ee-40ad-af2d-15276c7b52a7.png)
 
 ## 题目3
 ### 困难：找出影评次数最多的女士所给出最高分的10部电影的平均影评分，展示电影名和平均影评分（可使用多行SQL）
@@ -48,8 +50,9 @@ order by tr.rate desc
 limit 10) tr2
 on tr2.movieid=m.movieid
 group by m.movieid,m.moviename 
+![image](https://user-images.githubusercontent.com/8264550/128607025-a1abd735-7bf9-4f6a-ae15-18ccd5698d5e.png)
 
-## 附加作业：GeekFileFormat
+## 附加作业：GeekFileFormat 
 ### 请优先完成前面三个作业，Hive的练习更多的是对于HQL的使用，对于完成的同学，可以试着写一个Hive的FileFormat：GeekFileFormat
 ### 要求：
 - 实现两个类：GeekTextInputFormat和GeekTextOutputFormat
@@ -62,4 +65,6 @@ group by m.movieid,m.moviename
 - 【附加的附加】加密规则如下：文件输出时每随机2到256个单词，就插入一个gee...k，字母e的个数等于前面出现的非gee...k单词的个数。
   - 例如：    This notebook can be used to install gek on all worker nodes, run data generation, and create the TPCDS database.
   - 加密为：This notebook can be geeeek used to geek install gek on all geeeek worker nodes, run data generation, and create the TPCDS geeeeeeeeek database.
+ 
+ ### 源文件中GeekTextInputFormat 和GeekTextOuputFormat分别实现了解密和加密，未进行实际验证
 
