@@ -30,4 +30,4 @@ hdfs://xxx/target/source
 ### 需要支持source下存在多级子目录
 ### 需支持-i Ignore failures 参数
 ### 需支持-m max concurrence参数，控制同时copy的最大并发task数
-## 代码：SparkDistCP.scala 完成了多级目录和最大并发task数支持，未完成 ignore failures
+## 代码：SparkDistCP.scala 完成了多级目录和最大并发task数支持，采用scopt来进行命令行参数解析。未完成 ignore failures
