@@ -23,22 +23,26 @@ object SparkDistCP {
   val sc = spark.sparkContext;
 
   def main(args: Array[String]): Unit = {
-    val srcPath: Path = new Path("hdfs://master:9000/aa");
-    val destPath: Path = new Path("hdfs://master:9000/cc")
-    val sfileSystem: FileSystem = srcPath.getFileSystem(sc.hadoopConfiguration)
-    val dfileSystem: FileSystem = destPath.getFileSystem(sc.hadoopConfiguration)
-    checkDirectories(srcPath, destPath, sfileSystem, dfileSystem);
-    val fileIter = srcPath.getFileSystem(sc.hadoopConfiguration).listFiles(srcPath, true);
-    val fileList = new mutable.MutableList[(String, String)]
-    while (fileIter.hasNext) {
-      val f = fileIter.next();
-      val subPath = f.getPath.toString.split(srcPath.toString())(1)
-      val s = destPath.toString + subPath
-      fileList.+=:(f.getPath.toString, s)
-    }
-    val maxCurrence = 2
-    val fileRDD = sc.makeRDD(fileList, maxCurrence)
-    fileRDD.mapPartitions(v => transfrom(v)).collect().foreach(println)
+      //通过scopt解析命令行参数
+      val config = SparkDistCPOptionsParser.parse(args, sc.hadoopConfiguration)
+      val options = config.options
+      val uris = config.uris
+      val srcPath: Path = new Path(uris(0));
+      val destPath: Path = new Path(uris(1))
+      val sfileSystem: FileSystem = srcPath.getFileSystem(sc.hadoopConfiguration)
+      val dfileSystem: FileSystem = destPath.getFileSystem(sc.hadoopConfiguration)
+      checkDirectories(srcPath, destPath, sfileSystem, dfileSystem);
+      val fileIter = srcPath.getFileSystem(sc.hadoopConfiguration).listFiles(srcPath, true);
+      val fileList = new mutable.MutableList[(String, String)]
+      while (fileIter.hasNext) {
+        val f = fileIter.next();
+        val subPath = f.getPath.toString.split(srcPath.toString())(1)
+        val s = destPath.toString + subPath
+        fileList.+=:(f.getPath.toString, s)
+      }
+      val fileRDD = sc.makeRDD(fileList, options.maxConcurrence)
+      fileRDD.mapPartitions(v => transfrom(v)).collect().foreach(println)
+
   }
 
   def transfrom(v: Iterator[(String, String)]): Iterator[(String, Boolean)] = {
