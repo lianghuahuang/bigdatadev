@@ -22,7 +22,7 @@ object SparkDistCPOptionsParser {
         .text("Maximum Concurrence number of task to copy")
 
       arg[String]("<source_path> <dest_path>")
-        .unbounded()
+        .unbounded().minOccurs(2).maxOccurs(2)
         .optional()
         .action((x, c) => c.copy(uris = c.uris :+ new URI(x)))
     }
