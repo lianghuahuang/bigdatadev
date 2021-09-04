@@ -50,3 +50,51 @@ select DISTINCT customerId,productName from (select customerId,productName,amoun
 ![image](https://user-images.githubusercontent.com/8264550/132088989-f0cdc23a-60ca-4407-9da0-ba9469c50e46.png)
 ![image](https://user-images.githubusercontent.com/8264550/132089011-92a5e00e-7474-4e69-b81a-316399510a42.png)
 
+## 3. 实现自定义优化规则（静默规则）
+### 第一步 实现自定义规则（静默规则，通过set spark.sql.planChangeLog.level=WARN;确认执行到就行）
+case class MyPushDown(spark: SparkSession) extends Rule[LogicalPlan] { 
+def apply(plan: LogicalPlan): LogicalPlan = plan transform { …. }
+}
+### 第二步 创建自己的Extension并注入
+class MySparkSessionExtension extends (SparkSessionExtensions => Unit) {
+override def apply(extensions: SparkSessionExtensions): Unit = {
+extensions.injectOptimizerRule { session =>
+new MyPushDown(session)
+} } }
+### 第三步 通过spark.sql.extensions提交
+bin/spark-sql --jars my.jar --conf spark.sql.extensions=com.jikeshijian.MySparkSessionExtension
+### MySparkSessionExtension.scala
+```
+class MySparkSessionExtension extends (SparkSessionExtensions => Unit) {
+  override def apply(extensions: SparkSessionExtensions): Unit = {
+    extensions.injectOptimizerRule { session =>
+      new MyPushDown(session)
+    }
+  }
+}
+```
+###  MyPushDown.scala
+```
+case class MyPushDown(spark: SparkSession) extends Rule[LogicalPlan] {
+  def apply(plan: LogicalPlan): LogicalPlan =  {
+    logInfo("MyPushDown start")
+    plan transformAllExpressions {
+      case Multiply(left,right,failOnError)
+      if right.isInstanceOf[Literal] &&
+        right.asInstanceOf[Literal].value.isInstanceOf[Decimal] &&
+        right.asInstanceOf[Literal].value.asInstanceOf[Decimal].toDouble == 1.0 =>
+      logInfo("MyPushDown 生效")
+      left
+    }
+  }
+}
+``` 
+### 执行jar 
+spark-sql --jars /home/student05/spark-lhh.jar --conf spark.sql.extensions=com.jike.lhh.MySparkSessionExtension
+### 执行sql语句
+select customerId,productName,amountPaid*1.0 from sales
+### 执行结果可见自定义规则被应用
+![image](https://user-images.githubusercontent.com/8264550/132099174-5de91093-7b1a-42a3-8a63-de9af2c5d7ef.png)
+![image](https://user-images.githubusercontent.com/8264550/132099157-52d2a2fd-5cd4-42b8-888c-126ec544ead4.png)
+
+
