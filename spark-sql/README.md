@@ -30,3 +30,23 @@ case class ShowMyVersionCommand() extends RunnableCommand{
 ```
 ### 编译打包后执行结果：
 ![image](https://user-images.githubusercontent.com/8264550/132078588-1ea0bf50-aaa3-46d6-9586-c442d3681da8.png)
+
+## 2. 构建SQL满足如下要求
+### 通过set spark.sql.planChangeLog.level=WARN;查看
+### 1. 构建一条SQL，同时apply下面三条优化规则：
+- CombineFilters
+- CollapseProject
+- BooleanSimplification
+### SQL语句如下：1=1应用了BooleanSimplification司马，子查询语句应用collaseProject ，子查询和主查询条件应用了 combineFilters
+select productName from (select customerId,productName from sales where 1=1 and  customerId not in('a','b','c'))  a where customerId='d';   
+### 2. 构建一条SQL，同时apply下面五条优化规则：
+- ConstantFolding
+- PushDownPredicates
+- ReplaceDistinctWithAggregate
+- ReplaceExceptWithAntiJoin
+- FoldablePropagation
+### SQL语句如下：except语句应用了ReplaceExceptWithAntiJoin，distinct应用了ReplaceDistinctWithAggregate，“123 AS number” 作为常量传导到了后面的order by所以应用了FoldablePropagation，“amountPaid<10+2 ” 中的10+2应用了ConstantFolding，同时该条件语句应用了PushDownPredicates将条件应用到了子查询语句（截图为部分优化规则）
+select DISTINCT customerId,productName from (select customerId,productName,amountPaid,123 AS number from sales order by number) a where amountPaid<10+2  except DISTINCT select customerId,productName from sales where amountPaid>5;
+![image](https://user-images.githubusercontent.com/8264550/132088989-f0cdc23a-60ca-4407-9da0-ba9469c50e46.png)
+![image](https://user-images.githubusercontent.com/8264550/132089011-92a5e00e-7474-4e69-b81a-316399510a42.png)
+
