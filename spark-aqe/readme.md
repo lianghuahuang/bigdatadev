@@ -21,7 +21,7 @@ SqlBase.g4:
 sqlbase.g4定义
 ![image](https://user-images.githubusercontent.com/8264550/134325833-f961cf88-c24a-4011-ac6f-bfbb9b087957.png)
 
-CompactTableCommand.scala
+CompactTableCommand.scala (未完成1、2的要求)
 ```
 case class CompactTableCommand(tableIdent: TableIdentifier,
                                partitionSpec: Map[String, Option[String]],
