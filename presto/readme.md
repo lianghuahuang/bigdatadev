@@ -15,7 +15,7 @@
 ![image](https://user-images.githubusercontent.com/8264550/134851557-3062045b-0f20-437b-b6ac-4cf3fc4b963d.png)
 
 ### 3. 学习使用Presto-Jdbc库连接docker或e-mapreduce环境，重复上述查询。（选做）
-maven 依赖
+#### maven 依赖
 ``` 
         <dependency>
             <groupId>com.facebook.presto</groupId>
@@ -23,7 +23,7 @@ maven 依赖
             <version>0.262</version>
         </dependency>
 ``` 
-PrestoJdbcSample.java
+#### PrestoJdbcSample.java
 ``` 
 import java.sql.*;
 
@@ -67,5 +67,5 @@ public class PrestoJdbcSample {
    } 
 }
 ``` 
-程序执行结果如下：
+#### 程序执行结果如下：
 ![image](https://user-images.githubusercontent.com/8264550/134856505-3a6f9e84-de47-495e-84d9-8b34ce23ab97.png)
