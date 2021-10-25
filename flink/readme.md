@@ -66,5 +66,7 @@ public class SpendReport {
 ### 程序执行结果
 ![image](https://user-images.githubusercontent.com/8264550/138648743-8054b5d2-55ee-456b-a7cb-dd6e0085cdfd.png)
 ![image](https://user-images.githubusercontent.com/8264550/138648800-e5411679-b51c-478a-8f93-664458baab6e.png)
+![image](https://user-images.githubusercontent.com/8264550/138651131-7f96831a-fd24-4524-b8b5-b5b04cd26428.png)
+
 
 
