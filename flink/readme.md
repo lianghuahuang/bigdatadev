@@ -1,7 +1,10 @@
 ## 作业题
-report(transactions).executeInsert("spend_report");
-将transactions表经过report函数处理后写入到spend_report表。
-每分钟（小时）计算在五分钟（小时）内每个账号的平均交易金额（滑动窗口）？
+report(transactions).executeInsert("spend_report");  
+
+将transactions表经过report函数处理后写入到spend_report表。  
+
+每分钟（小时）计算在五分钟（小时）内每个账号的平均交易金额（滑动窗口）？  
+
 注：使用分钟还是小时作为单位均可
 
 
@@ -60,3 +63,8 @@ public class SpendReport {
     }
 }
 ```
+### 程序执行结果
+![image](https://user-images.githubusercontent.com/8264550/138648743-8054b5d2-55ee-456b-a7cb-dd6e0085cdfd.png)
+![image](https://user-images.githubusercontent.com/8264550/138648800-e5411679-b51c-478a-8f93-664458baab6e.png)
+
+
