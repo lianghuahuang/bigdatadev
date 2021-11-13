@@ -33,5 +33,16 @@ org.apache.spark.sql.execution.benchmark.TPCDSQueryBenchmark --jars
 spark-core_2.12-3.1.1-tests.jar,spark-catalyst_2.12-3.1.1-tests.jar 
 spark-sql_2.12-3.1.1-tests.jar --data-location tpcds-data-1g --query-filter "q73"
 
+### 题目二：架构设计题 
+你是某互联网公司的大数据平台架构师，请设计一套基于 Lambda 架构的数据平台架构，要求尽可能多的把课程中涉及的组件添加到该架构图中。 
+并描述 Lambda 架构的优缺点，要求不少于 300 字。
 
+### 题目三：简答题（三选一） 
+- A：简述 HDFS 的读写流程，要求不少于 300 字 
+- B：简述 Spark Shuffle 的工作原理，要求不少于 300 字 
+Spark在DAG调度阶段会将一个Job划分为多个Stage，上游Stage做map工作，下游Stage做reduce工作，其本质上还是MapReduce计算框架。 
+Shuffle是连接map和reduce之间的桥梁，它将map的输出对应到reduce输入中，这期间涉及到序列化反序列化、跨节点网络IO以及磁盘读写IO等.
+Spark在DAG阶段以shuffle为界，划分stage，上游stage做map task，每个map task将计算结果数据分成多份，每一份对应到下游stage的每个partition中，并将其临时写到磁盘，该过程叫做shuffle write；
+下游stage做reduce task，每个reduce task通过网络拉取（fetch）上游stage中所有map task的指定分区结果数据，该过程叫做shuffle read，最后完成reduce的业务逻辑
+- C：简述 Flink SQL 的工作原理，要求不少于 300 字
 
