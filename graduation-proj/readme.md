@@ -1,10 +1,22 @@
 ### 题目一： 分析一条 TPCDS SQL（请基于 Spark 3.1.1 版本解答） 
 SQL 从中任意选择一条：
 https://github.com/apache/spark/tree/master/sql/core/src/test/resources/tpcds
-- （1）运行该 SQL，如 q38，并截图该 SQL 的 SQL 执行图
-![image](https://user-images.githubusercontent.com/8264550/141604101-e19b1505-7e1a-4848-8f4c-473961faf47f.png)
-- （2）该 SQL 用到了哪些优化规则（optimizer rules） 
+- （1）运行该 SQL，如 q38，并截图该 SQL 的 SQL 执行图(q63)
+![image](https://user-images.githubusercontent.com/8264550/141675009-3eb9e083-cc87-4736-b6be-0bcfa793f2cc.png)
 
+- （2）该 SQL 用到了哪些优化规则（optimizer rules） 
+=== Applying Rule org.apache.spark.sql.catalyst.optimizer.ColumnPruning ===
+=== Applying Rule org.apache.spark.sql.catalyst.optimizer.ReorderJoin ===
+=== Applying Rule org.apache.spark.sql.catalyst.optimizer.PushDownPredicates ===
+=== Applying Rule org.apache.spark.sql.catalyst.optimizer.CollapseProject ===
+=== Applying Rule org.apache.spark.sql.catalyst.optimizer.NullPropagation ===
+=== Applying Rule org.apache.spark.sql.catalyst.optimizer.ConstantFolding ===
+=== Applying Rule org.apache.spark.sql.catalyst.optimizer.SimplifyCasts ===
+=== Applying Rule org.apache.spark.sql.catalyst.optimizer.OptimizeIn ===
+=== Applying Rule org.apache.spark.sql.catalyst.optimizer.InferFiltersFromConstraints ===
+=== Applying Rule org.apache.spark.sql.catalyst.optimizer.PushDownPredicates ===
+=== Applying Rule org.apache.spark.sql.catalyst.optimizer.DecimalAggregates ===
+=== Applying Rule org.apache.spark.sql.catalyst.optimizer.RewritePredicateSubquery ===
 - （3）请各用不少于 200 字描述其中的两条优化规则
 帮助文档：如何运行该 SQL：
 1. 从 github 下载 TPCDS 数据生成器
