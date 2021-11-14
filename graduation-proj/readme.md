@@ -5,18 +5,17 @@ https://github.com/apache/spark/tree/master/sql/core/src/test/resources/tpcds
 ![image](https://user-images.githubusercontent.com/8264550/141675009-3eb9e083-cc87-4736-b6be-0bcfa793f2cc.png)
 
 - （2）该 SQL 用到了哪些优化规则（optimizer rules） 
-  - ColumnPruning
-  - ReorderJoin
-  - PushDownPredicates
-  - CollapseProject
-  - NullPropagation
-  - ConstantFolding
-  - SimplifyCasts
-  - OptimizeIn
-  - InferFiltersFromConstraints
-  - PushDownPredicates
+  - ColumnPruning 列剪枝
+  - ReorderJoin join过滤操作下推
+  - PushDownPredicates 谓词下推
+  - CollapseProject 投影
+  - NullPropagation 空传播
+  - ConstantFolding 常量折叠
+  - SimplifyCasts 简化转换
+  - OptimizeIn 关键字in优化，替代为InSet
+  - InferFiltersFromConstraints 对join的过滤操作进行优化
   - DecimalAggregates
-  - RewritePredicateSubquery
+  - RewritePredicateSubquery 将特定子查询为此逻辑转换为left-semi/anti join
 - （3）请各用不少于 200 字描述其中的两条优化规则
 帮助文档：如何运行该 SQL：
 1. 从 github 下载 TPCDS 数据生成器
