@@ -54,6 +54,7 @@ spark-sql_2.12-3.1.1-tests.jar --data-location tpcds-data-1g --query-filter "q73
 ### 题目二：架构设计题 
 你是某互联网公司的大数据平台架构师，请设计一套基于 Lambda 架构的数据平台架构，要求尽可能多的把课程中涉及的组件添加到该架构图中。 
 并描述 Lambda 架构的优缺点，要求不少于 300 字。
+![image](https://user-images.githubusercontent.com/8264550/141682540-fb2e6e37-18c6-4dd3-ba4e-04f0de15c985.png)
 
 ### 题目三：简答题（三选一） 
 - A：简述 HDFS 的读写流程，要求不少于 300 字 
