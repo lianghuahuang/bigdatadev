@@ -8,7 +8,7 @@ https://github.com/apache/spark/tree/master/sql/core/src/test/resources/tpcds
   - ColumnPruning 列剪枝
   - ReorderJoin join过滤操作下推
   - PushDownPredicates 谓词下推
-  - CollapseProject 投影
+  - CollapseProject 投影算子消除
   - NullPropagation 空传播
   - ConstantFolding 常量折叠
   - SimplifyCasts 简化转换
@@ -17,6 +17,13 @@ https://github.com/apache/spark/tree/master/sql/core/src/test/resources/tpcds
   - DecimalAggregates
   - RewritePredicateSubquery 将特定子查询为此逻辑转换为left-semi/anti join
 - （3）请各用不少于 200 字描述其中的两条优化规则
+  1、ColumnPruning 列剪枝：尝试从逻辑计划中去掉不需要的列，从而减少读取数据的量。该规则会在多种情况下生效：  
+  - 当有groupBy等聚合操作时，会把不需要的列在读取数据时去掉，以减少数据的读取量；
+  - 在Union+select的组合去掉不需要的属性；  
+  - 在进行Join+select时去掉不需要的列；  
+  - 在进行window+select操作时，去掉没有对其进行操作的列
+  在q63中只需要读取i_manager_id,ss_sales_price
+  2、ReorderJoin：对Join操作进行重新排列，把所有的过滤条件推入join中，以便保证join内部至少有一个过滤条件
 帮助文档：如何运行该 SQL：
 1. 从 github 下载 TPCDS 数据生成器
 >git clone https://github.com/maropu/spark-tpcds-datagen.git
